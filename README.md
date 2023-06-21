@@ -6,6 +6,8 @@
     +sistemare db
     +connessione al db
     +foto come BeReal
+    +aggiungere la colonna dei passi nel db
+    +aggiungere la colonna firebase_uid nel db
   front:
     +interfacce messaggistica
     +home
