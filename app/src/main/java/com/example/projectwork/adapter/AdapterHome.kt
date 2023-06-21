@@ -1,4 +1,4 @@
-package com.example.birra_2.ui.adapter
+package com.example.projectwork.adapter
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -14,7 +14,7 @@ import com.example.projectwork.R
 import com.example.projectwork.databinding.ItemAccountBinding
 import com.squareup.picasso.Picasso
 
-class Adapter : ListAdapter<CAccount, Holder>(object : DiffUtil.ItemCallback<CAccount>(){
+class AdapterHome : ListAdapter<CAccount, Holder>(object : DiffUtil.ItemCallback<CAccount>(){
     override fun areItemsTheSame(oldItem: CAccount, newItem: CAccount): Boolean {
 
         return oldItem.accountID==newItem.accountID

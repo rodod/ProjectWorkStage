@@ -1,16 +1,14 @@
-package com.example.projectwork
+package com.example.projectwork.activity
 
 import android.os.Bundle
-import com.google.android.material.snackbar.Snackbar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.WindowCompat
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import android.view.Menu
-import android.view.MenuItem
 import androidx.navigation.Navigation
+import com.example.projectwork.R
 import com.example.projectwork.databinding.ActivityMainBinding
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
@@ -48,7 +46,9 @@ class MainActivity : AppCompatActivity() {
                 }
 
                 else -> {
-                    navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main)
+                    navController = Navigation.findNavController(this,
+                        R.id.nav_host_fragment_content_main
+                    )
                     true
                 }
             }
