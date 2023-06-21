@@ -5,9 +5,9 @@ import android.content.SharedPreferences
 import com.google.gson.Gson
 
 // Generic function that reads data from a SharedPreferences file
-inline fun <reified T> readData(context: Context, file: String): MutableList<T> {
+inline fun <reified T> Context.readData(file: String): MutableList<T> {
     val items: MutableList<T> = mutableListOf()
-    val sharedPreferences = context.getSharedPreferences(file, Context.MODE_PRIVATE)
+    val sharedPreferences = getSharedPreferences(file, Context.MODE_PRIVATE)
     val allEntries: Map<String, *> = sharedPreferences.all
     val iterator: Iterator<*> = allEntries.entries.iterator()
     val gson = Gson()
@@ -20,9 +20,10 @@ inline fun <reified T> readData(context: Context, file: String): MutableList<T> 
     return items
 }
 
+
 // Generic function that adds data to a SharedPreferences file
-fun <T> addData(context: Context, items: List<T>, file: String) {
-    val pref = context.getSharedPreferences(file, Context.MODE_PRIVATE)
+inline fun <reified T> Context.addData(items: List<T>, file: String) {
+    val pref = getSharedPreferences(file, Context.MODE_PRIVATE)
     val editor: SharedPreferences.Editor = pref.edit()
     val gson = Gson()
     for (item in items) {
@@ -34,9 +35,8 @@ fun <T> addData(context: Context, items: List<T>, file: String) {
     println("Data added successfully")
 }
 
-// Generic function that adds a single item to a SharedPreferences file
-fun <T> addDataSing(context: Context, item: T, file: String) {
-    val pref = context.getSharedPreferences(file, Context.MODE_PRIVATE)
+inline fun <reified T> Context.addDataSing(item: T, file: String) {
+    val pref = getSharedPreferences(file, Context.MODE_PRIVATE)
     val editor: SharedPreferences.Editor = pref.edit()
     val gson = Gson()
     val itemJson = gson.toJson(item)
@@ -45,6 +45,7 @@ fun <T> addDataSing(context: Context, item: T, file: String) {
     editor.apply()
     println("Data added successfully")
 }
+
 
 // Function to update the JSON file by refreshing the data from the API
 /*fun <T> updateFile(context: Context, file: String) {

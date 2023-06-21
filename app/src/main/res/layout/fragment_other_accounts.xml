@@ -1,13 +1,74 @@
-<?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".Fragment.OtherAccountsFragment">
+    android:layout_height="match_parent">
 
-    <fragment
-        android:id="@+id/OtherAccountLayout"
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/other_account_fragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/headerOther"
+            android:layout_width="match_parent"
+            android:layout_height="92dp"
+            android:background="#B8D8DC"
+            android:textAppearance="@android:style/TextAppearance.Material.Display3" />
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/friendPFP"
+                    android:layout_width="match_parent"
+                    android:layout_height="232dp"
+                    tools:srcCompat="@tools:sample/avatars"
+                    android:layout_margin="35dp"/>
+
+                <TextView
+                    android:id="@+id/otherNameView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:textSize="40sp"/>
+
+                <TextView
+                    android:id="@+id/otherSurnameView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textSize="35sp"
+                    android:layout_marginTop="10sp"/>
+
+                <TextView
+                    android:id="@+id/otherBioView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="25sp"
+                    android:layout_marginTop="10sp"/>
+
+                <TextView
+                    android:id="@+id/otherStepsView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textSize="30sp"
+                    android:layout_margin="30sp"/>
+
+            </LinearLayout>
+        </ScrollView>
+
+
+    </LinearLayout>
 
 </FrameLayout>

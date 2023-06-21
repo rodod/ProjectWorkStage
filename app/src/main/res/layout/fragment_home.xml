@@ -13,7 +13,7 @@
             android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/header"
+                    android:id="@+id/headerFriends"
                     android:layout_width="match_parent"
                     android:layout_height="92dp"
                     android:background="#FFB74C"

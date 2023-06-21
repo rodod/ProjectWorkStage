@@ -7,9 +7,12 @@ import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import android.view.Menu
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
 import com.example.projectwork.R
 import com.example.projectwork.databinding.ActivityMainBinding
+import com.example.projectwork.viewModels.CViewModelAccount
+import com.example.projectwork.viewModels.MyViewModelFactoryAcc
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class MainActivity : AppCompatActivity() {
@@ -17,10 +20,13 @@ class MainActivity : AppCompatActivity() {
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMainBinding
     lateinit var bottomNav : BottomNavigationView
+    lateinit var viewModelAcc: CViewModelAccount
 
     override fun onCreate(savedInstanceState: Bundle?) {
         WindowCompat.setDecorFitsSystemWindows(window, false)
         super.onCreate(savedInstanceState)
+
+        viewModelAcc = ViewModelProvider(this, MyViewModelFactoryAcc(application))[CViewModelAccount::class.java]
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -69,7 +75,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun navigateToAccount() {
         val navController = findNavController(R.id.nav_host_fragment_content_main)
-        navController.navigate(R.id.account_fragment)
+        navController.navigate(R.id.user_account_fragment)
     }
 
     private fun navigateToMap() {

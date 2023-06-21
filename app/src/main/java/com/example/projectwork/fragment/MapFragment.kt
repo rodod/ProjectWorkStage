@@ -1,4 +1,4 @@
-package com.example.projectwork.Fragment
+package com.example.projectwork.fragment
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -7,7 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.example.projectwork.databinding.FragmentAccountBinding
 
-class UserAccountFragment : Fragment() {
+class MapFragment : Fragment() {
 
     private var _binding: FragmentAccountBinding? = null
 
@@ -18,13 +18,12 @@ class UserAccountFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
 
         _binding = FragmentAccountBinding.inflate(inflater, container, false)
         return binding.root
 
     }
-
 
     override fun onDestroyView() {
         super.onDestroyView()

@@ -1,6 +1,6 @@
 package com.example.projectwork.classes
 
-import com.example.projectwork.classes.CFriends
+import android.graphics.Color
 
 data class CAccount(
     val accountID: Int,
@@ -11,4 +11,5 @@ data class CAccount(
     val steps : Int,
     val bio : String,
     val friends : List<CFriends>,
+    val color : Color,
 )

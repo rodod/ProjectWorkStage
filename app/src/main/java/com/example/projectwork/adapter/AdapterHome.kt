@@ -35,14 +35,11 @@ class AdapterHome : ListAdapter<CAccount, Holder>(object : DiffUtil.ItemCallback
         holder.itemView.setOnClickListener { view ->
             val bundle = Bundle()
             bundle.putInt("item_id", account.accountID)
-            bundle.putString("item_image", account.profileImage)
-            //val navController = findNavController(holder.itemView)
-            //navController.navigate(R.id.action_beerListFragment_to_beerInfoFragment, bundle)
-            val beerImage=view.findViewById<ImageView>(R.id.imgBeer)
+            val beerImage=view.findViewById<ImageView>(R.id.imgPFP)
             val extras = FragmentNavigatorExtras(beerImage to "imgBeer")
 
             view.findNavController().navigate(
-                R.id.OtherAccountLayout,
+                R.id.other_account_fragment,
                 bundle, // Bundle of args
                 null, // NavOptions
                 extras)
@@ -53,13 +50,13 @@ class AdapterHome : ListAdapter<CAccount, Holder>(object : DiffUtil.ItemCallback
 
 class Holder(private val binding: ItemAccountBinding) :RecyclerView.ViewHolder(binding.root){
     fun bind(account : CAccount){
-        binding.header.text=account.name
+        binding.headerFriends.text=account.name
         binding.desc.text=account.surname
         Picasso.get()
             .load(account.profileImage)
             .resize(130, 500) // Imposta la dimensione desiderata
             .centerCrop() // Effettua il ridimensionamento con taglio al centro
-            .into(binding.imgBeer)
+            .into(binding.imgPFP)
     }
     //imposta l'xml
 }

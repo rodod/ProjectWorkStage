@@ -1,15 +1,13 @@
-package com.example.projectwork.Fragment
+package com.example.projectwork.fragment
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.navigation.fragment.findNavController
-import com.example.projectwork.R
 import com.example.projectwork.databinding.FragmentAccountBinding
 
-class MapFragment : Fragment() {
+class UserAccountFragment : Fragment() {
 
     private var _binding: FragmentAccountBinding? = null
 
@@ -20,12 +18,13 @@ class MapFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
 
         _binding = FragmentAccountBinding.inflate(inflater, container, false)
         return binding.root
 
     }
+
 
     override fun onDestroyView() {
         super.onDestroyView()

@@ -1,4 +1,4 @@
-package com.example.projectwork.Fragment
+package com.example.projectwork.fragment
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -17,6 +17,7 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         //con il datamanager fare la lista readdata
         //adapter.submitList(TODO("AGGIUNGERE POI CON L'API LA LISTA DA FAR VEDERE"))
 

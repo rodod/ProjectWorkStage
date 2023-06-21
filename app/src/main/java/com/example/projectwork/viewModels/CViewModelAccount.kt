@@ -11,18 +11,18 @@ import com.example.projectwork.dataManager.readData
 
 class CViewModelAccount(application: Application) : AndroidViewModel(application) {
     // Utilizza l'oggetto Application come necessario nel ViewModel{
-    private val _mess = MutableLiveData<List<CAccount>>()
+    private val _accounts = MutableLiveData<List<CAccount>>()
     init{
-        val messages: List<CAccount> = readData(application, "PREF_ACCOUNT")
-        _mess.value = messages
+        val accounts: List<CAccount> = application.readData("PREF_ACCOUNT")
+        _accounts.value = accounts
     }
 
-    val messages: LiveData<List<CAccount>> get() = _mess
+    val accounts: LiveData<List<CAccount>> get() = _accounts
 
 }
 
 @Suppress("UNCHECKED_CAST")
-class MyViewModelFactoryAcc(private val application: Application) : ViewModelProvider.AndroidViewModelFactory(application) {
+class MyViewModelFactoryMess(private val application: Application) : ViewModelProvider.AndroidViewModelFactory(application) {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         return when {
             modelClass.isAssignableFrom(CViewModelAccount::class.java) -> CViewModelAccount(application) as T
