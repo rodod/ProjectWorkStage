@@ -5,6 +5,7 @@
   back:
     +sistemare db
     +connessione al db
+    +foto come BeReal
   front:
     +interfacce messaggistica
     +home
@@ -13,7 +14,7 @@
 
 -Giovedi:
   back:
-    +Foto come BeReal
+    +API generali
   front:
     +schermata account
     +schermata mappa
