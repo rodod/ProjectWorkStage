@@ -8,18 +8,22 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.projectwork.adapter.AdapterHome
 import com.example.projectwork.databinding.FragmentHomeBinding
+import com.example.projectwork.viewModels.CViewModelAccount
 
 class HomeFragment : Fragment() {
 
     private var _binding: FragmentHomeBinding? = null
     private val adapter = AdapterHome()
     private val binding get() = _binding!!
+    val application = requireActivity().application
+    private  var viewModel = CViewModelAccount(application)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        //con il datamanager fare la lista readdata
-        //adapter.submitList(TODO("AGGIUNGERE POI CON L'API LA LISTA DA FAR VEDERE"))
+        viewModel.accounts.observe (viewLifecycleOwner) { accounts ->
+            adapter.submitList(accounts)
+        }
 
         binding.Recycler.adapter = adapter
         binding.Recycler.layoutManager = LinearLayoutManager(requireContext())

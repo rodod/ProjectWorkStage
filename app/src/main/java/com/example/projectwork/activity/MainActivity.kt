@@ -10,6 +10,8 @@ import android.view.Menu
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
 import com.example.projectwork.R
+import com.example.projectwork.classes.CAccount
+import com.example.projectwork.dataManager.readData
 import com.example.projectwork.databinding.ActivityMainBinding
 import com.example.projectwork.viewModels.CViewModelAccount
 import com.example.projectwork.viewModels.MyViewModelFactoryAcc
@@ -25,6 +27,12 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         WindowCompat.setDecorFitsSystemWindows(window, false)
         super.onCreate(savedInstanceState)
+
+        val intent = intent
+        val receivedData = intent.getStringExtra("username")
+        val listAccounts = this.readData<CAccount>("PREF_ACCOUNT")
+        val account = searchAccount(receivedData!!,listAccounts )
+
 
         viewModelAcc = ViewModelProvider(this, MyViewModelFactoryAcc(application))[CViewModelAccount::class.java]
 
@@ -47,7 +55,7 @@ class MainActivity : AppCompatActivity() {
                     true
                 }
                 R.id.account -> {
-                    navigateToAccount()
+                    navigateToAccount(account!!)
                     true
                 }
 
@@ -73,13 +81,24 @@ class MainActivity : AppCompatActivity() {
         navController.navigate(R.id.home_fragment)
     }
 
-    private fun navigateToAccount() {
+    private fun navigateToAccount(user : CAccount) {
         val navController = findNavController(R.id.nav_host_fragment_content_main)
-        navController.navigate(R.id.user_account_fragment)
+        val bundle = Bundle()
+        bundle.putString("accountUsername", user.username)
+        navController.navigate(R.id.user_account_fragment, bundle)
     }
 
     private fun navigateToMap() {
         val navController = findNavController(R.id.nav_host_fragment_content_main)
         navController.navigate(R.id.fragmentMap)
+    }
+
+    private fun searchAccount(username : String, totAcc : MutableList<CAccount>): CAccount?{
+        for(account in totAcc){
+            if(username == account.username){
+                return account
+            }
+        }
+        return null
     }
 }

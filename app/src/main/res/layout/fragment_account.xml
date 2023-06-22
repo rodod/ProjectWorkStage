@@ -66,6 +66,13 @@
                         android:textSize="30sp"
                         android:layout_margin="30sp"/>
 
+                    <Button
+                        android:id="@+id/change"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/modify_your_profile"
+                        android:textAlignment="center" />
+
                 </LinearLayout>
             </ScrollView>
     </LinearLayout>

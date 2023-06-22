@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">ProjectWork</string>
-    <string name="PREF">com.pp.sharedprefs.PREFERENCES_FILE_KEY</string>
+    <string name="PREF_ACCOUNT">com.pp.sharedprefs.PREFERENCES_FILE_KEY</string>
     <string name="home">Home\n</string>
     <string name="map">Map\n</string>
     <string name="account">Account\n</string>
@@ -9,4 +9,13 @@
     <string name="capture_photo">Capture Photo</string>
     <string name="send_a_photo">Send a photo!</string>
     <string name="pfp">pfp</string>
+    <string name="change_it">Change it</string>
+    <string name="change_your_profile_picture">Change your profile picture</string>
+    <string name="apply_changes">Apply changes</string>
+    <string name="modify_your_profile">Modify your profile</string>
+    <string name="username">USERNAME</string>
+    <string name="password">PASSWORD</string>
+    <string name="login">Login!</string>
+    <string name="write_the_password_here">Write the password here</string>
+    <string name="write_the_username_here">Write the username here</string>
 </resources>
