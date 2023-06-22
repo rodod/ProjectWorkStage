@@ -18,6 +18,8 @@ import com.example.projectwork.dataManager.readData
 class ChangeFragment : Fragment() {
     private lateinit var profileImageView: ImageView
     private lateinit var changePhotoButton: Button
+    private var selectedImageUri: Uri? = null
+
 
     private val pickImageContract = registerForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
         uri?.let {
@@ -80,7 +82,17 @@ class ChangeFragment : Fragment() {
                 bioText.text.toString()
             }
 
-            //var supportAccount = CAccount(thisAcc!!.accountID, textName, textSurname, textUser, thisAcc.password,  )
+            var supportAccount = CAccount(
+                thisAcc!!.accountID,
+                textName,
+                textSurname,
+                textUser,
+                thisAcc.password,
+                selectedImageUri.toString(), // Passa l'URI selezionato direttamente
+                thisAcc.steps,
+                textBio,
+                thisAcc.friends,
+            )
         }
 
         return rootView
@@ -92,12 +104,12 @@ class ChangeFragment : Fragment() {
 
     private fun setProfileImage(imageUri: Uri) {
         profileImageView.setImageURI(imageUri)
-        // Salva l'URI dell'immagine del profilo nel database o in una variabile di stato
-        saveProfileImageUri(imageUri)
+        selectedImageUri = imageUri
         Toast.makeText(requireContext(), "Foto del profilo aggiornata", Toast.LENGTH_SHORT).show()
     }
 
-    private fun saveProfileImageUri(uri: Uri) {
+
+    private fun saveProfileImageUri(uri: Uri){
         // Salva l'URI dell'immagine del profilo nel database o in una variabile di stato
         // Ad esempio, puoi utilizzare Firebase Realtime Database o Firebase Firestore per salvarlo
     }
@@ -110,4 +122,9 @@ class ChangeFragment : Fragment() {
         }
         return null
     }
+
+
+
+
+
 }

@@ -12,5 +12,4 @@ data class CAccount(
     val steps : Int,
     val bio : String,
     val friends : List<CFriends>,
-    val color : Color,
 )
