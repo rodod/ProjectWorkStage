@@ -21,7 +21,7 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMainBinding
-    lateinit var bottomNav : BottomNavigationView
+    private lateinit var bottomNav : BottomNavigationView
     lateinit var viewModelAcc: CViewModelAccount
 
     override fun onCreate(savedInstanceState: Bundle?) {

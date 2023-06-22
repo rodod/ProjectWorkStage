@@ -23,7 +23,6 @@ class ChatFragment : Fragment() {
         viewModel.messages.observe (viewLifecycleOwner) { messages ->
             adapter.submitList(messages)
         }
-        //adapter.submitList(TODO("AGGIUNGERE POI CON L'API LA LISTA DA FAR VEDERE"))
 
         binding.Recycler.adapter = adapter
         binding.Recycler.layoutManager = LinearLayoutManager(requireContext())

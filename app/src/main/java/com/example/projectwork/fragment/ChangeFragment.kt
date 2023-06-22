@@ -1,5 +1,6 @@
 package com.example.projectwork.fragment
 
+import android.content.Context
 import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -14,6 +15,8 @@ import androidx.fragment.app.Fragment
 import com.example.projectwork.R
 import com.example.projectwork.classes.CAccount
 import com.example.projectwork.dataManager.readData
+import com.google.gson.Gson
+import org.json.JSONObject
 
 class ChangeFragment : Fragment() {
     private lateinit var profileImageView: ImageView
@@ -55,35 +58,35 @@ class ChangeFragment : Fragment() {
 
         val commitBtn=rootView.findViewById<Button>(R.id.sendChanges)
         commitBtn.setOnClickListener {
-            var textUser = if(usernameText.text==null){
+            val textUser = if(usernameText.text==null){
                 thisAcc.username
             } else{
                 usernameText.text.toString()
             }
 
 
-            var textName = if(nameText.text==null){
+            val textName = if(nameText.text==null){
                 thisAcc.name
             } else{
                 nameText.text.toString()
             }
 
 
-            var textSurname = if(surnameText.text==null){
+            val textSurname = if(surnameText.text==null){
                 thisAcc.surname
             } else{
                 surnameText.text.toString()
             }
 
 
-            var textBio = if(bioText.text==null){
+            val textBio = if(bioText.text==null){
                 thisAcc.bio
             } else{
                 bioText.text.toString()
             }
 
-            var supportAccount = CAccount(
-                thisAcc!!.accountID,
+            val supportAccount = CAccount(
+                thisAcc.accountID,
                 textName,
                 textSurname,
                 textUser,
@@ -92,7 +95,14 @@ class ChangeFragment : Fragment() {
                 thisAcc.steps,
                 textBio,
                 thisAcc.friends,
+                thisAcc.longitude,
+                thisAcc.latitude
             )
+
+            val gson = Gson()
+            val itemJson = gson.toJson(supportAccount)
+            val jsonObject = JSONObject(itemJson)
+            replaceLineInSharedPreferences(application, "item_${thisAcc.hashCode()}", jsonObject)
         }
 
         return rootView
@@ -109,11 +119,6 @@ class ChangeFragment : Fragment() {
     }
 
 
-    private fun saveProfileImageUri(uri: Uri){
-        // Salva l'URI dell'immagine del profilo nel database o in una variabile di stato
-        // Ad esempio, puoi utilizzare Firebase Realtime Database o Firebase Firestore per salvarlo
-    }
-
     private fun searchAccount(username : String, totAcc : MutableList<CAccount>): CAccount?{
         for(account in totAcc){
             if(username == account.username){
@@ -123,8 +128,32 @@ class ChangeFragment : Fragment() {
         return null
     }
 
+    private fun replaceLineInSharedPreferences(context: Context, key: String, newData: JSONObject) {
+        val sharedPreferences = context.getSharedPreferences("your_shared_preferences_name", Context.MODE_PRIVATE)
 
+        // Leggi il contenuto JSON esistente dalle SharedPreferences
+        val jsonString = sharedPreferences.getString(key, null)
 
+        // Verifica se il contenuto JSON esistente è valido
+        if (jsonString != null) {
+            // Analizza il contenuto JSON in una struttura dati
+            val existingData = JSONObject(jsonString)
 
+            // Sostituisci i dati della riga con i nuovi dati forniti
+            existingData.put("accountID", newData.getString("accountID"))
+            existingData.put("name", newData.getString("name"))
+            existingData.put("surname", newData.getString("surname"))
+            existingData.put("username", newData.getString("username"))
+            existingData.put("password", newData.getString("password"))
+            existingData.put("imageUri", newData.getString("imageUri"))
+            existingData.put("steps", newData.getInt("steps"))
+            existingData.put("bio", newData.getString("bio"))
+            existingData.put("friends", newData.getJSONArray("friends"))
+            existingData.put("longitude", newData.getDouble("longitude"))
+            existingData.put("latitude", newData.getDouble("latitude"))
 
+            // Salva la struttura dati aggiornata nelle SharedPreferences
+            sharedPreferences.edit().putString(key, existingData.toString()).apply()
+        }
+    }
 }
