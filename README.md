@@ -38,12 +38,12 @@
       +fatta interfaccia home
       +fatte viewmodel e sharedpreferences
       +fatta interfaccia chat
+      +fare schermata sign in
 
 
   -DA FARE
     front:
       +api per finire la mappa, prendere dati per il profilo
-      +fare schermata sign in
       +fare scheramta foto
       +fare contapassi
       +connessioni con server
