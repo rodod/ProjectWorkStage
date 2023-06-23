@@ -29,3 +29,21 @@
   front:
     +conta passi
     +finire interfacce
+
+
+  -FATTO
+    front:
+      +interfaccia utente, amico e modifiche profilo
+      +fatta interfaccia mappa, mancano api per prendere le info degli amici
+      +fatta interfaccia home
+      +fatte viewmodel e sharedpreferences
+      +fatta interfaccia chat
+
+
+  -DA FARE
+    front:
+      +api per finire la mappa, prendere dati per il profilo
+      +fare schermata sign in
+      +fare scheramta foto
+      +fare contapassi
+      +connessioni con server
