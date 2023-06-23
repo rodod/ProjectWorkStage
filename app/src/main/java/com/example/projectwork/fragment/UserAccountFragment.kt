@@ -9,9 +9,11 @@ import androidx.navigation.fragment.findNavController
 import com.example.projectwork.R
 import com.example.projectwork.classes.CAccount
 import com.example.projectwork.dataManager.readData
+import com.example.projectwork.dataManager.searchAccount
 import com.example.projectwork.databinding.FragmentAccountBinding
 import com.squareup.picasso.Picasso
 
+@Suppress("NAME_SHADOWING")
 class UserAccountFragment : Fragment() {
 
     private var _binding: FragmentAccountBinding? = null
@@ -36,8 +38,8 @@ class UserAccountFragment : Fragment() {
         val application = requireActivity().application
         val totAccount= application.readData<CAccount>("PREF_ACCOUNT")
         val bundle = arguments
-        val receivedData=bundle!!.getString("username")
-        val thisAcc = searchAccount(receivedData!!, totAccount)
+        val receivedData=bundle!!.getString("accountId")
+        val thisAcc = searchAccount(receivedData!!.toInt(), totAccount)
 
         // Modifica il testo delle TextView
         binding.userSurnameView.text = thisAcc!!.surname
@@ -57,10 +59,10 @@ class UserAccountFragment : Fragment() {
 
         val changeButton=binding.change
         changeButton.setOnClickListener {
-            val data = thisAcc.username // Il dato che desideri passare
+            val data = thisAcc.accountID // Il dato che desideri passare
 
             val bundle = Bundle().apply {
-                putString("username", data)
+                putInt("accountId", data)
             }
 
             val navController = findNavController()
@@ -74,12 +76,4 @@ class UserAccountFragment : Fragment() {
         _binding = null
     }
 
-    private fun searchAccount(username : String, totAcc : MutableList<CAccount>): CAccount?{
-        for(account in totAcc){
-            if(username == account.username){
-                return account
-            }
-        }
-        return null
-    }
 }

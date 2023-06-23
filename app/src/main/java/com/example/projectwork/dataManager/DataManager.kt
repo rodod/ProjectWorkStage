@@ -2,6 +2,7 @@ package com.example.projectwork.dataManager
 
 import android.content.Context
 import android.content.SharedPreferences
+import com.example.projectwork.classes.CAccount
 import com.google.gson.Gson
 
 // Generic function that reads data from a SharedPreferences file
@@ -44,6 +45,15 @@ inline fun <reified T> Context.addDataSing(item: T, file: String) {
     editor.putString(itemKey, itemJson)
     editor.apply()
     println("Data added successfully")
+}
+
+fun searchAccount(id : Int, totAcc : MutableList<CAccount>): CAccount?{
+    for(account in totAcc){
+        if(id == account.accountID){
+            return account
+        }
+    }
+    return null
 }
 
 

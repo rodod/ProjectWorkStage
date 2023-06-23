@@ -35,12 +35,22 @@ class LoginActivity : AppCompatActivity() {
         button.setOnClickListener {
             if (control){
                 val intent = Intent(this, MainActivity::class.java)
-                intent.putExtra("username", username)
+                val account = searchAccount(username, readData)
+                intent.putExtra("userId", account!!.accountID)
                 startActivity(intent)
             }
             else{
                 Toast.makeText(this, "Wrong credentials or account inexistent", Toast.LENGTH_SHORT).show()
             }
         }
+    }
+
+    private fun searchAccount(username : String, totAcc : MutableList<CAccount>): CAccount?{
+        for(account in totAcc){
+            if(username == account.username){
+                return account
+            }
+        }
+        return null
     }
 }

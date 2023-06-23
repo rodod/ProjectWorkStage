@@ -1,24 +1,31 @@
 package com.example.projectwork.fragment
 
+import android.app.Application
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.projectwork.adapter.AdapterMessage
 import com.example.projectwork.databinding.FragmentChatBinding
 import com.example.projectwork.viewModels.CViewModelMessages
+import com.example.projectwork.viewModels.MyViewModelFactoryMess
 
 class ChatFragment : Fragment() {
 
     private var _binding: FragmentChatBinding? = null
     private val adapter = AdapterMessage()
+    private val application : Application = requireActivity().application
     private val binding get() = _binding!!
     private lateinit var viewModel : CViewModelMessages
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        viewModel = ViewModelProvider(this, MyViewModelFactoryMess(application))[CViewModelMessages::class.java]
+
 
         viewModel.messages.observe (viewLifecycleOwner) { messages ->
             adapter.submitList(messages)

@@ -12,6 +12,7 @@ import androidx.navigation.Navigation
 import com.example.projectwork.R
 import com.example.projectwork.classes.CAccount
 import com.example.projectwork.dataManager.readData
+import com.example.projectwork.dataManager.searchAccount
 import com.example.projectwork.databinding.ActivityMainBinding
 import com.example.projectwork.viewModels.CViewModelAccount
 import com.example.projectwork.viewModels.MyViewModelFactoryAcc
@@ -22,16 +23,16 @@ class MainActivity : AppCompatActivity() {
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMainBinding
     private lateinit var bottomNav : BottomNavigationView
-    lateinit var viewModelAcc: CViewModelAccount
+    private lateinit var viewModelAcc: CViewModelAccount
 
     override fun onCreate(savedInstanceState: Bundle?) {
         WindowCompat.setDecorFitsSystemWindows(window, false)
         super.onCreate(savedInstanceState)
 
         val intent = intent
-        val receivedData = intent.getStringExtra("username")
+        val receivedData = intent.getStringExtra("accountId")
         val listAccounts = this.readData<CAccount>("PREF_ACCOUNT")
-        val account = searchAccount(receivedData!!,listAccounts )
+        val account = searchAccount(receivedData!!.toInt(),listAccounts )
 
 
         viewModelAcc = ViewModelProvider(this, MyViewModelFactoryAcc(application))[CViewModelAccount::class.java]
@@ -43,7 +44,7 @@ class MainActivity : AppCompatActivity() {
         appBarConfiguration = AppBarConfiguration(navController.graph)
         setupActionBarWithNavController(navController, appBarConfiguration)
 
-        bottomNav = findViewById(R.id.bottomNav) as BottomNavigationView
+        bottomNav = findViewById(R.id.bottomNav)
         bottomNav.setOnItemSelectedListener {
             when (it.itemId) {
                 R.id.home -> {
@@ -51,7 +52,7 @@ class MainActivity : AppCompatActivity() {
                     true
                 }
                 R.id.map -> {
-                    navigateToMap()
+                    navigateToMap(account!!)
                     true
                 }
                 R.id.account -> {
@@ -84,21 +85,15 @@ class MainActivity : AppCompatActivity() {
     private fun navigateToAccount(user : CAccount) {
         val navController = findNavController(R.id.nav_host_fragment_content_main)
         val bundle = Bundle()
-        bundle.putString("accountUsername", user.username)
+        bundle.putString("accountId", user.accountID.toString())
         navController.navigate(R.id.user_account_fragment, bundle)
     }
 
-    private fun navigateToMap() {
+    private fun navigateToMap(user : CAccount) {
         val navController = findNavController(R.id.nav_host_fragment_content_main)
+        val bundle = Bundle()
+        bundle.putString("accountId", user.accountID.toString())
         navController.navigate(R.id.fragmentMap)
-    }
 
-    private fun searchAccount(username : String, totAcc : MutableList<CAccount>): CAccount?{
-        for(account in totAcc){
-            if(username == account.username){
-                return account
-            }
-        }
-        return null
     }
 }

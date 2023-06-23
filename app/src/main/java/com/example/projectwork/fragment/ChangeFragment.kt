@@ -15,6 +15,7 @@ import androidx.fragment.app.Fragment
 import com.example.projectwork.R
 import com.example.projectwork.classes.CAccount
 import com.example.projectwork.dataManager.readData
+import com.example.projectwork.dataManager.searchAccount
 import com.google.gson.Gson
 import org.json.JSONObject
 
@@ -43,8 +44,8 @@ class ChangeFragment : Fragment() {
         val application = requireActivity().application
         val totAccount= application.readData<CAccount>("PREF_ACCOUNT")
         val bundle = arguments
-        val receivedData=bundle!!.getString("username")
-        val thisAcc = searchAccount(receivedData!!, totAccount)
+        val receivedData=bundle!!.getString("accountId")
+        val thisAcc = searchAccount(receivedData!!.toInt(), totAccount)
 
         val usernameText = rootView.findViewById<EditText>(R.id.editUsername)
         val nameText = rootView.findViewById<EditText>(R.id.editName)
@@ -118,18 +119,8 @@ class ChangeFragment : Fragment() {
         Toast.makeText(requireContext(), "Foto del profilo aggiornata", Toast.LENGTH_SHORT).show()
     }
 
-
-    private fun searchAccount(username : String, totAcc : MutableList<CAccount>): CAccount?{
-        for(account in totAcc){
-            if(username == account.username){
-                return account
-            }
-        }
-        return null
-    }
-
     private fun replaceLineInSharedPreferences(context: Context, key: String, newData: JSONObject) {
-        val sharedPreferences = context.getSharedPreferences("your_shared_preferences_name", Context.MODE_PRIVATE)
+        val sharedPreferences = context.getSharedPreferences("PREF_ACCOUNT", Context.MODE_PRIVATE)
 
         // Leggi il contenuto JSON esistente dalle SharedPreferences
         val jsonString = sharedPreferences.getString(key, null)
