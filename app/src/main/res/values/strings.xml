@@ -19,4 +19,8 @@
     <string name="write_the_password_here">Write the password here</string>
     <string name="write_the_username_here">Write the username here</string>
     <string name="add_to_friends">Add to friends</string>
+    <string name="register">Register!</string>
+    <string name="sign_in">SIGN IN</string>
+    <string name="username_here">Username here</string>
+    <string name="password_here">Password here</string>
 </resources>

@@ -43,6 +43,7 @@ class LoginActivity : AppCompatActivity() {
                 Toast.makeText(this, "Wrong credentials or account inexistent", Toast.LENGTH_SHORT).show()
             }
         }
+
     }
 
     private fun searchAccount(username : String, totAcc : MutableList<CAccount>): CAccount?{

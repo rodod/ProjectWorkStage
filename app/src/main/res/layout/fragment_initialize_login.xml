@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".fragment.ChangeFragment">
+
+    <fragment
+        android:id="@+id/change_account_fragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/header"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/change_your_profile_picture" />
+
+            <ImageView
+                android:id="@+id/firstPFP"
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                android:scaleType="centerCrop"
+                android:src=""
+                android:contentDescription="@string/hello_blank_fragment" />
+
+            <Button
+                android:id="@+id/selectFirstPhoto"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/change_it" />
+
+            <EditText
+                android:id="@+id/firstUsername"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                android:importantForAutofill="no"
+                android:padding="30dp"/>
+
+            <EditText
+                android:id="@+id/firstName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                android:importantForAutofill="no"
+                android:padding="30dp"/>
+
+            <EditText
+                android:id="@+id/firstSurname"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                android:importantForAutofill="no"
+                android:padding="30dp"/>
+
+            <EditText
+                android:id="@+id/firstBio"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                android:importantForAutofill="no"
+                android:padding="30dp"/>
+
+            <Button
+                android:id="@+id/returnToLogin"
+                android:layout_width="80sp"
+                android:layout_height="40sp"
+                android:text="@string/login"/>
+
+        </LinearLayout>
+
+    </fragment>
+
+</FrameLayout>
