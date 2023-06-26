@@ -13,11 +13,15 @@ import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import com.example.projectwork.R
+import com.example.projectwork.classes.ApiSendInfo
 import com.example.projectwork.classes.CAccount
-import com.example.projectwork.dataManager.readData
-import com.example.projectwork.dataManager.searchAccount
+import com.example.projectwork.dataManager.getLatestUsedId
 import com.google.gson.Gson
 import org.json.JSONObject
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import retrofit2.Retrofit
 
 
 class InitializeLogin : Fragment() {
@@ -35,6 +39,12 @@ class InitializeLogin : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val rootView = inflater.inflate(R.layout.fragment_initialize_login, container, false)
+        val retrofit = Retrofit.Builder()
+            .baseUrl("http://192.168.1.223:3000") //mettere indirizzo giuto
+            .build()
+
+        val accountService = retrofit.create(ApiSendInfo::class.java)
+
 
         profileImageView = rootView.findViewById(R.id.firstPFP)
         changePhotoButton = rootView.findViewById(R.id.selectFirstPhoto)
@@ -44,20 +54,19 @@ class InitializeLogin : Fragment() {
         }
 
         val application = requireActivity().application
-        val totAccount= application.readData<CAccount>("PREF_ACCOUNT")
         val bundle = arguments
-        val receivedData=bundle!!.getString("accountId")
-        val thisAcc = searchAccount(receivedData!!.toInt(), totAccount)
+        val receivedEmail=bundle!!.getString("accountEmail")
+        val receivedPassword=bundle.getString("accountPassword")
 
         val usernameText = rootView.findViewById<EditText>(R.id.firstUsername)
         val nameText = rootView.findViewById<EditText>(R.id.firstName)
         val surnameText = rootView.findViewById<EditText>(R.id.firstSurname)
         val bioText = rootView.findViewById<EditText>(R.id.firstBio)
 
-        usernameText.hint=thisAcc!!.username
-        nameText.hint=thisAcc.name
-        surnameText.hint=thisAcc.surname
-        bioText.hint=thisAcc.bio
+        usernameText.hint="Username here"
+        nameText.hint="Name here"
+        surnameText.hint="Surname here"
+        bioText.hint="Biography here"
 
         val commitBtn=rootView.findViewById<Button>(R.id.returnToLogin)
         commitBtn.setOnClickListener {
@@ -69,30 +78,53 @@ class InitializeLogin : Fragment() {
 
             val textBio = bioText.text.toString()
 
+            var list : MutableList<Int>? = null
+
 
             if (textName=="" || textUser==""|| textSurname==""|| textBio=="" ){
                 Toast.makeText(application, "Fill all the obligatory fields", Toast.LENGTH_SHORT).show()
             }
 
+
             else{
                 supportAccount = CAccount(
-                    thisAcc.accountID,
+                    application.getLatestUsedId("PREF_ACCOUNT"),
+                    receivedEmail!!,
                     textName,
                     textSurname,
                     textUser,
-                    thisAcc.password,
+                    receivedPassword!!,
                     selectedImageUri.toString(), // Passa l'URI selezionato direttamente
-                    thisAcc.steps,
+                    0,
                     textBio,
-                    thisAcc.friends,
-                    thisAcc.longitude,
-                    thisAcc.latitude
-                )
+                    list,
+                    0.0,
+                    0.0)
+
 
                 val gson = Gson()
                 val itemJson = gson.toJson(supportAccount)
                 val jsonObject = JSONObject(itemJson)
-                replaceLineInSharedPreferences(application, "item_${thisAcc.hashCode()}", jsonObject)
+                replaceLineInSharedPreferences(application, "item_${supportAccount.hashCode()}", jsonObject)
+
+                val call = accountService.createAccount(supportAccount)
+
+                call.enqueue(object : Callback<Void> {
+                    override fun onResponse(call: Call<Void>, response: Response<Void>) {
+                        if (response.isSuccessful) {
+                            // L'account è stato inviato con successo al server
+                            Toast.makeText(application, "Account created successfully", Toast.LENGTH_SHORT).show()
+                        } else {
+                            // Gestisci l'errore in base alla risposta del server
+                            Toast.makeText(application, "Failed to create account", Toast.LENGTH_SHORT).show()
+                        }
+                    }
+
+                    override fun onFailure(call: Call<Void>, t: Throwable) {
+                        // Gestisci l'errore di connessione o altre eccezioni
+                        Toast.makeText(application, "Error: " + t.message, Toast.LENGTH_SHORT).show()
+                    }
+                })
             }
         }
 

@@ -21,6 +21,17 @@ inline fun <reified T> Context.readData(file: String): MutableList<T> {
     return items
 }
 
+fun Context.getLatestUsedId(file: String): Int {
+    var id = 0
+    val sharedPreferences = getSharedPreferences(file, Context.MODE_PRIVATE)
+    val allEntries: Map<String, *> = sharedPreferences.all
+    val iterator: Iterator<*> = allEntries.entries.iterator()
+    while (iterator.hasNext()) {
+        id++
+    }
+    return id
+}
+
 
 // Generic function that adds data to a SharedPreferences file
 inline fun <reified T> Context.addData(items: List<T>, file: String) {

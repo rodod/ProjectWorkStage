@@ -6,7 +6,7 @@
     tools:context=".fragment.ChangeFragment">
 
     <fragment
-        android:id="@+id/change_account_fragment"
+        android:id="@+id/initialize_account_fragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
