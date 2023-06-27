@@ -12,7 +12,6 @@ import com.example.projectwork.classes.CAccount
 import com.example.projectwork.dataManager.readData
 import com.example.projectwork.databinding.ActivityLoginBinding
 import com.google.firebase.auth.FirebaseAuth
-import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -83,9 +82,8 @@ class LoginActivity : AppCompatActivity() {
                                         val apiService = retrofit.create(ApiSendInfo::class.java)
                                         val call = apiService.sendToken(token)
 
-                                        call.enqueue(object : Callback<ResponseBody> {
-                                            override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
-                                                // Gestisci la risposta dal server
+                                        call.enqueue(object : Callback<Void> {
+                                            override fun onResponse(call: Call<Void>, response: Response<Void>) {
                                                 if (response.isSuccessful) {
                                                     println("Token sent successfully")
                                                 } else {
@@ -93,10 +91,11 @@ class LoginActivity : AppCompatActivity() {
                                                 }
                                             }
 
-                                            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                                            override fun onFailure(call: Call<Void>, t: Throwable) {
                                                 println("Unable to communicate with the server")
                                             }
                                         })
+
                                     }
                                 } else {
                                     println("Unable to use the token")
@@ -113,6 +112,5 @@ class LoginActivity : AppCompatActivity() {
                 }
             }
     }
-
-
 }
+

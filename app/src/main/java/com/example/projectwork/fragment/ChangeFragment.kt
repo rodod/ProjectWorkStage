@@ -16,9 +16,11 @@ import com.example.projectwork.R
 import com.example.projectwork.classes.CAccount
 import com.example.projectwork.dataManager.readData
 import com.example.projectwork.dataManager.searchAccount
+import com.example.projectwork.dialog.PasswordDialog
 import com.google.gson.Gson
 import org.json.JSONObject
 
+@Suppress("NAME_SHADOWING")
 class ChangeFragment : Fragment() {
     private lateinit var profileImageView: ImageView
     private lateinit var changePhotoButton: Button
@@ -47,15 +49,26 @@ class ChangeFragment : Fragment() {
         val receivedData=bundle!!.getString("accountId")
         val thisAcc = searchAccount(receivedData!!.toInt(), totAccount)
 
+
+        val changePasswordButton = rootView.findViewById<Button>(R.id.change_password)
         val usernameText = rootView.findViewById<EditText>(R.id.editUsername)
         val nameText = rootView.findViewById<EditText>(R.id.editName)
         val surnameText = rootView.findViewById<EditText>(R.id.editSurname)
         val bioText = rootView.findViewById<EditText>(R.id.editBio)
+        val dialog = PasswordDialog()
 
         usernameText.hint=thisAcc!!.username
         nameText.hint=thisAcc.name
         surnameText.hint=thisAcc.surname
         bioText.hint=thisAcc.bio
+
+        //PER CAMBIARE PASSWORD
+        changePasswordButton.setOnClickListener {
+            val bundle = Bundle()
+            bundle.putString("userPW", thisAcc.password)
+            dialog.arguments = bundle
+            dialog.show(childFragmentManager, "ChangePasswordDialog")
+        }
 
         val commitBtn=rootView.findViewById<Button>(R.id.sendChanges)
         commitBtn.setOnClickListener {
@@ -88,6 +101,7 @@ class ChangeFragment : Fragment() {
 
             val supportAccount = CAccount(
                 thisAcc.accountID,
+                thisAcc.email,
                 textName,
                 textSurname,
                 textUser,
