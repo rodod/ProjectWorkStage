@@ -39,11 +39,11 @@
       +fatte viewmodel e sharedpreferences
       +fatta interfaccia chat
       +fare schermata sign in
+      +api per finire la mappa, prendere dati per il profilo
+      +connessioni con server
 
 
   -DA FARE
     front:
-      +api per finire la mappa, prendere dati per il profilo
       +fare scheramta foto
       +fare contapassi
-      +connessioni con server
