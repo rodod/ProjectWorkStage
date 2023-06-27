@@ -40,7 +40,7 @@ class InitializeLogin : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val rootView = inflater.inflate(R.layout.fragment_initialize_login, container, false)
         val retrofit = Retrofit.Builder()
-            .baseUrl("http://192.168.1.223:3000") //mettere indirizzo giuto
+            .baseUrl("http://192.168.1.223:3000")
             .build()
 
         val accountService = retrofit.create(ApiSendInfo::class.java)
@@ -78,7 +78,7 @@ class InitializeLogin : Fragment() {
 
             val textBio = bioText.text.toString()
 
-            var list : MutableList<Int>? = null
+            val list : MutableList<Int>? = null
 
 
             if (textName=="" || textUser==""|| textSurname==""|| textBio=="" ){
