@@ -62,18 +62,18 @@ class SignUpFragment : Fragment() {
                         val apiService = retrofit.create(ApiSendInfo::class.java)
                         val call = apiService.sendToken(token)
 
-                        call.enqueue(object : Callback<ResponseBody> {
-                            override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
+                        call.enqueue(object : Callback<Void> {
+                            override fun onResponse(call: Call<Void>, response: Response<Void>) {
                                 // Gestisci la risposta dal server
                                 if (response.isSuccessful) {
                                     println("Token created and sent to the server")
                                 } else {
-                                    println("Error sending the token")
+                                    Toast.makeText(application, "Unable to communicate with the server", Toast.LENGTH_SHORT).show()
                                 }
                             }
 
-                            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
-                                Toast.makeText(application, "Unable to communicate with the server", Toast.LENGTH_SHORT).show()
+                            override fun onFailure(call: Call<Void>, t: Throwable) {
+                                TODO("Not yet implemented")
                             }
                         })
                     }

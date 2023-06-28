@@ -15,14 +15,13 @@ import androidx.fragment.app.Fragment
 import com.example.projectwork.R
 import com.example.projectwork.classes.ApiSendInfo
 import com.example.projectwork.classes.CAccount
+import com.example.projectwork.classes.createRetrofitInstance
 import com.example.projectwork.dataManager.getLatestUsedId
 import com.google.gson.Gson
 import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import retrofit2.Retrofit
-
 
 class InitializeLogin : Fragment() {
     private lateinit var profileImageView: ImageView
@@ -39,11 +38,8 @@ class InitializeLogin : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val rootView = inflater.inflate(R.layout.fragment_initialize_login, container, false)
-        val retrofit = Retrofit.Builder()
-            .baseUrl("http://192.168.1.223:3000")
-            .build()
 
-        val accountService = retrofit.create(ApiSendInfo::class.java)
+        val accountService = createRetrofitInstance().create(ApiSendInfo::class.java)
 
 
         profileImageView = rootView.findViewById(R.id.firstPFP)

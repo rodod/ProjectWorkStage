@@ -30,9 +30,7 @@ class PasswordDialog : DialogFragment() {
         val inflater = LayoutInflater.from(requireContext())
         val view = inflater.inflate(R.layout.dialog_change_password, null)
 
-        val retrofit=createRetrofitInstance("link")
-
-        val apiService = retrofit.create(ApiSendInfo::class.java)
+        val apiService = createRetrofitInstance().create(ApiSendInfo::class.java)
 
         val dialogBuilder = AlertDialog.Builder(requireContext())
             .setTitle("Change Password")

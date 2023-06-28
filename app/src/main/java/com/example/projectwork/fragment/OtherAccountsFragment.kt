@@ -11,6 +11,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.projectwork.R
 import com.example.projectwork.classes.ApiSendInfo
 import com.example.projectwork.classes.CAccount
+import com.example.projectwork.classes.createRetrofitInstance
 import com.example.projectwork.dataManager.addDataSing
 import com.example.projectwork.dataManager.readData
 import com.example.projectwork.dataManager.searchAccount
@@ -21,7 +22,6 @@ import com.squareup.picasso.Picasso
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import retrofit2.Retrofit
 
 class OtherAccountsFragment : Fragment() {
 
@@ -49,11 +49,7 @@ class OtherAccountsFragment : Fragment() {
 
         val userAccount = searchAccount(userId!!.toInt(), accountsList)
 
-        val retrofit = Retrofit.Builder()
-            .baseUrl("http://indirizzo_server:porta") // Sostituisci con il tuo indirizzo del server
-            .build()
-
-        val apiService = retrofit.create(ApiSendInfo::class.java)
+        val apiService = createRetrofitInstance().create(ApiSendInfo::class.java)
 
 
         val call = apiService.getProfile(friendId!!.toInt())

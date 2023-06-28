@@ -9,13 +9,13 @@ import androidx.navigation.findNavController
 import com.example.projectwork.R
 import com.example.projectwork.classes.ApiSendInfo
 import com.example.projectwork.classes.CAccount
+import com.example.projectwork.classes.createRetrofitInstance
 import com.example.projectwork.dataManager.readData
 import com.example.projectwork.databinding.ActivityLoginBinding
 import com.google.firebase.auth.FirebaseAuth
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import retrofit2.Retrofit
 
 class LoginActivity : AppCompatActivity() {
     private lateinit var binding : ActivityLoginBinding
@@ -75,11 +75,7 @@ class LoginActivity : AppCompatActivity() {
                                     val token = tokenTask.result?.token
 
                                     if (token != null) {
-                                        val retrofit = Retrofit.Builder()
-                                            .baseUrl("http://your_server_url/") // Sostituisci con l'URL del tuo server
-                                            .build()
-
-                                        val apiService = retrofit.create(ApiSendInfo::class.java)
+                                        val apiService = createRetrofitInstance().create(ApiSendInfo::class.java)
                                         val call = apiService.sendToken(token)
 
                                         call.enqueue(object : Callback<Void> {

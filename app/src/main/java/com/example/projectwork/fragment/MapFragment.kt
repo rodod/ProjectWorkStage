@@ -56,7 +56,7 @@ class MapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickListe
         accountId = bundle!!.getInt("userId")
 
 
-        val apiService = createRetrofitInstance("link").create(ApiSendInfo::class.java)
+        val apiService = createRetrofitInstance().create(ApiSendInfo::class.java)
 
         val call = apiService.getNearbyAccounts()
         call.enqueue(object : Callback<List<CAccount>> {
