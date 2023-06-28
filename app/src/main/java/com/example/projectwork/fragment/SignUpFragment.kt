@@ -8,14 +8,8 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.example.projectwork.R
-import com.example.projectwork.classes.ApiSendInfo
 import com.example.projectwork.databinding.FragmentSignInBinding
 import com.google.firebase.auth.FirebaseAuth
-import okhttp3.ResponseBody
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
-import retrofit2.Retrofit
 
 class SignUpFragment : Fragment() {
     private lateinit var binding: FragmentSignInBinding
@@ -51,33 +45,6 @@ class SignUpFragment : Fragment() {
         auth.createUserWithEmailAndPassword(email, password)
             .addOnCompleteListener(requireActivity()) { task ->
                 if (task.isSuccessful) {
-                    val user = auth.currentUser
-                    val token = user?.getIdToken(false)?.result?.token
-
-                    if (token != null) {
-                        val retrofit = Retrofit.Builder()
-                            .baseUrl("http://your_server_url/") // Sostituisci con l'URL del tuo server
-                            .build()
-
-                        val apiService = retrofit.create(ApiSendInfo::class.java)
-                        val call = apiService.sendToken(token)
-
-                        call.enqueue(object : Callback<Void> {
-                            override fun onResponse(call: Call<Void>, response: Response<Void>) {
-                                // Gestisci la risposta dal server
-                                if (response.isSuccessful) {
-                                    println("Token created and sent to the server")
-                                } else {
-                                    Toast.makeText(application, "Unable to communicate with the server", Toast.LENGTH_SHORT).show()
-                                }
-                            }
-
-                            override fun onFailure(call: Call<Void>, t: Throwable) {
-                                TODO("Not yet implemented")
-                            }
-                        })
-                    }
-
                     val navController = findNavController()
                     val bundle = Bundle()
                     bundle.putString("accountEmail", email)

@@ -15,6 +15,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
+import retrofit2.http.PUT
 import retrofit2.http.Path
 import kotlin.coroutines.resumeWithException
 
@@ -28,11 +29,11 @@ interface ApiSendInfo {
     @GET("api/accounts")
     fun getNearbyAccounts(): Call<List<CAccount>>
 
-    @POST("api/password")
+    @PUT("api/password")
     fun sendNewPassword(@Body password : String) : Call<Void>
 
     @POST("api/token")
-    fun sendToken(@Body token : String) : Call<Void>
+    fun sendLogin(@Body email : String, password: String) : Call<Void>
 }
 
 fun createRetrofitInstance(): Retrofit {

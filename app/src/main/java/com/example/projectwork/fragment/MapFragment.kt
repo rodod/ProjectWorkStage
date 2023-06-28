@@ -22,6 +22,7 @@ import com.example.projectwork.classes.CAccount
 import com.example.projectwork.classes.createRetrofitInstance
 import com.example.projectwork.dataManager.readData
 import com.example.projectwork.dataManager.searchAccount
+import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.MapView
@@ -94,7 +95,22 @@ class MapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickListe
             )
         }
 
+        if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION)
+            == PackageManager.PERMISSION_GRANTED) {
+            // Permesso già concesso, ottieni le coordinate
+            getCurrentLocation()
+        } else {
+            // Richiedi il permesso di ACCESS_FINE_LOCATION se non è stato ancora concesso
+            ActivityCompat.requestPermissions(
+                requireActivity(),
+                arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
+                PERMISSIONS_REQUEST_LOCATION
+            )
+        }
+
+
         mapView.onResume() // Resume map rendering
+
 
         val readData = application.readData<CAccount>("PREF_ACCOUNT")
         val user = searchAccount(accountId, readData)
@@ -203,6 +219,38 @@ class MapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickListe
 
     companion object {
         private const val PERMISSIONS_REQUEST_LOCATION = 1001
+    }
+
+    private fun getCurrentLocation() {
+        val fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireContext())
+        if (ActivityCompat.checkSelfPermission(
+                application,
+                Manifest.permission.ACCESS_FINE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
+                application,
+                Manifest.permission.ACCESS_COARSE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            return
+        }
+        fusedLocationClient.lastLocation
+            .addOnSuccessListener { location ->
+                if (location != null) {
+                    // Coordinate ottenute con successo, puoi utilizzarle qui
+                    val lat = location.latitude
+                    val lng = location.longitude
+
+                    // Esegui le operazioni necessarie con le coordinate ottenute
+                    // ...
+                } else {
+                    // Errore nel recupero delle coordinate
+                    Toast.makeText(application, "Failed to retrieve current location", Toast.LENGTH_SHORT).show()
+                }
+            }
+            .addOnFailureListener { exception ->
+                // Gestisci l'eccezione se si verifica un errore nel recupero delle coordinate
+                Toast.makeText(application, "Failed to retrieve current location: ${exception.message}", Toast.LENGTH_SHORT).show()
+            }
     }
 }
 

@@ -7,7 +7,6 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.projectwork.classes.CMessage
 import com.example.projectwork.databinding.ItemMessageBinding
-import com.squareup.picasso.Picasso
 
 class AdapterMessage : ListAdapter<CMessage, HolderMess>(object : DiffUtil.ItemCallback<CMessage>(){
     override fun areItemsTheSame(oldItem: CMessage, newItem: CMessage): Boolean {
@@ -34,12 +33,8 @@ class HolderMess(private val binding: ItemMessageBinding) :RecyclerView.ViewHold
     fun bind(message : CMessage){
 
         binding.sender.text=message.senderUsername
-        binding.stepsViewMess.text =message.steps.toString()
-        Picasso.get()
-            .load(message.frontPhoto)
-            .resize(500, 500) // Imposta la dimensione desiderata
-            .centerCrop() // Effettua il ridimensionamento con taglio al centro
-            .into(binding.imageViewMessage)
+        binding.steps.text =message.steps.toString()
+        binding.textMessage.text=message.message
+        binding.date.text=message.date.toString()
     }
-    //imposta l'xml
 }

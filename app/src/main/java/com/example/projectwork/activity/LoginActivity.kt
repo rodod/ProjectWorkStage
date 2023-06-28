@@ -7,15 +7,10 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import com.example.projectwork.R
-import com.example.projectwork.classes.ApiSendInfo
 import com.example.projectwork.classes.CAccount
-import com.example.projectwork.classes.createRetrofitInstance
 import com.example.projectwork.dataManager.readData
 import com.example.projectwork.databinding.ActivityLoginBinding
 import com.google.firebase.auth.FirebaseAuth
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 
 class LoginActivity : AppCompatActivity() {
     private lateinit var binding : ActivityLoginBinding
@@ -69,39 +64,11 @@ class LoginActivity : AppCompatActivity() {
                 if (task.isSuccessful) {
                     val currentUser = auth.currentUser
                     if (currentUser != null) {
-                        currentUser.getIdToken(false)
-                            .addOnCompleteListener { tokenTask ->
-                                if (tokenTask.isSuccessful) {
-                                    val token = tokenTask.result?.token
-
-                                    if (token != null) {
-                                        val apiService = createRetrofitInstance().create(ApiSendInfo::class.java)
-                                        val call = apiService.sendToken(token)
-
-                                        call.enqueue(object : Callback<Void> {
-                                            override fun onResponse(call: Call<Void>, response: Response<Void>) {
-                                                if (response.isSuccessful) {
-                                                    println("Token sent successfully")
-                                                } else {
-                                                    println("Error sending the token")
-                                                }
-                                            }
-
-                                            override fun onFailure(call: Call<Void>, t: Throwable) {
-                                                println("Unable to communicate with the server")
-                                            }
-                                        })
-
-                                    }
-                                } else {
-                                    println("Unable to use the token")
-                                }
-                            }
-
                         val intent = Intent(this, MainActivity::class.java)
                         val account = searchAccount(email, readData)
                         intent.putExtra("userId", account!!.accountID)
                         startActivity(intent)
+                        println("Successful login")
                     }
                 } else {
                     Toast.makeText(this, "Authentication failed", Toast.LENGTH_SHORT).show()
