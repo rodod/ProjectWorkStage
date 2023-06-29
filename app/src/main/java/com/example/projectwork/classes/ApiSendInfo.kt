@@ -34,6 +34,9 @@ interface ApiSendInfo {
 
     @POST("api/token")
     fun sendLogin(@Body email : String, password: String) : Call<Void>
+
+    @GET("message/{id}")
+    fun getMessages(): Call<List<CMessage>>
 }
 
 fun createRetrofitInstance(): Retrofit {

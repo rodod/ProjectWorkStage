@@ -9,15 +9,19 @@ import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.projectwork.adapter.AdapterMessage
+import com.example.projectwork.adapter.Polling
+import com.example.projectwork.adapter.PollingListener
+import com.example.projectwork.classes.CMessage
 import com.example.projectwork.databinding.FragmentChatBinding
 import com.example.projectwork.viewModels.CViewModelMessages
 import com.example.projectwork.viewModels.MyViewModelFactoryMess
 
-class ChatFragment : Fragment() {
+class ChatFragment : Fragment() , PollingListener{
 
     private var _binding: FragmentChatBinding? = null
     private val adapter = AdapterMessage()
     private val application : Application = requireActivity().application
+    private val polling = Polling(this)
     private val binding get() = _binding!!
     private lateinit var viewModel : CViewModelMessages
 
@@ -41,7 +45,16 @@ class ChatFragment : Fragment() {
                 null, // NavOptions
                 extras)*/ TODO("VA ALL'INTERFACCIA DELLA FOTO")
         }
+
+        polling.startPolling()
+
     }
+
+    override fun onPollingResult(result: List<CMessage>) {
+        // Aggiorna l'adapter con la nuova lista di elementi
+        adapter.submitList(result)
+    }
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -56,5 +69,6 @@ class ChatFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+        polling.stopPolling()
     }
 }
